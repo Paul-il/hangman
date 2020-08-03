@@ -49,7 +49,6 @@ def multi_player_mode(word,points1,points2,player1,player2):
                     if e1 == len(stages) or e1 > len(stages):
                         print(f"{player1} lose the round!")
                         pp1 = rletters.count('@')
-                        pp1 = pp1 - 5
                         p1 = points1 + pp1
                         pp2 = rletters.count('$')
                         p2 = pp2 + points2
@@ -93,7 +92,6 @@ def multi_player_mode(word,points1,points2,player1,player2):
                         pp1 = p1 + points1
                         pp2 = rletters.count('$')
                         p2 = pp2 + points2
-                        pp2 = p2 - 5
                         check_points(player2,pp2,player1,pp1)
                         
             break
