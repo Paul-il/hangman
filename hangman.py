@@ -34,7 +34,7 @@ def multi_player_mode(word,points1,points2,player1,player2):
                         print(("".join(board)))
                         win = True
                         pp1 = points1 + 10
-                        pp2 = rletters.count('$') * 1
+                        pp2 = rletters.count('$')
                         p2 = pp2 + points2
                         check_points(player1,pp1,player2,p2)
                                         
@@ -48,10 +48,10 @@ def multi_player_mode(word,points1,points2,player1,player2):
 
                     if e1 == len(stages) or e1 > len(stages):
                         print(f"{player1} lose the round!")
-                        pp1 = rletters.count('@') * 1
+                        pp1 = rletters.count('@')
                         pp1 = pp1 - 5
                         p1 = points1 + pp1
-                        pp2 = rletters.count('$') * 1
+                        pp2 = rletters.count('$')
                         p2 = pp2 + points2
                         check_points(player1,p1,player2,p2)
             break
@@ -73,7 +73,7 @@ def multi_player_mode(word,points1,points2,player1,player2):
                         print(f"{player2} win the round! The word was:")
                         print("".join(board))
                         win = True
-                        pp1 = rletters.count('@') * 1
+                        pp1 = rletters.count('@')
                         p1 = pp1 + points1
                         pp2 = points2 + 10
                         check_points(player2,pp2,player1,p1)
@@ -89,9 +89,9 @@ def multi_player_mode(word,points1,points2,player1,player2):
 
                     if e2 == len(stages) or e2 > len(stages):
                         print(f"{player2} lose the round!")
-                        p1 = rletters.count('@') * 1
+                        p1 = rletters.count('@')
                         pp1 = p1 + points1
-                        pp2 = rletters.count('$') * 1
+                        pp2 = rletters.count('$')
                         p2 = pp2 + points2
                         pp2 = p2 - 5
                         check_points(player2,pp2,player1,pp1)
