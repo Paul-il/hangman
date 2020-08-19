@@ -57,7 +57,8 @@ class Game(object):
         question = int(input("New Game 1.\nExit 0.\n"))
         if question == 1:
             for name in self.player.name:
-                os.remove(f"{name}.txt")
+                if os.path.isfile(f"{name}.txt"):
+                     os.remove(f"{name}.txt")
             main()
         elif question == 0:
             exit(0)
