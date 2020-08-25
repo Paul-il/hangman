@@ -1,75 +1,58 @@
 import random
 import subprocess
-import os
 import time
 
 
 class Game(object):
     def __init__(self):
-        self.max_points = 100
+        self.max_points = 5
         self.player = Player(self.player_amount())
         self.stage = Stages()
+        self.__add_user_to_dict__()
     
+    def __add_user_to_dict__(self):
+        for name in self.player.name:points.update( {name:0} )
+
     def __re__(self):
         menu = self.menu()
-        count = 0
         if menu == 1:
             subprocess.call("clear")
             self.play()
         elif menu == 2:
-            try:
-                for name in self.player.name:
-                    if os.path.isfile(f"{name}.txt"):
-                        os.remove(f"{name}.txt")
-            except:
-                pass
-            subprocess.call("clear")
             main()
         elif menu == 3:
-            for name in self.player.name:
-                count +=1
-            if count > 1:
-                for name in self.player.name:
-                    print(f"{name} [{self.calc_points(name)}] points.")
-                time.sleep(3)
-                self.__re__()
-            else:
-                try:
-                    with open(f"{self.player.name[0]}.txt","r") as file:
-                        print(f"{self.player.name[0]} [{self.calc_points(self.player.name[0])}] points.")
-                except:
-                    print(f"You have no score {self.player.name[0]}")
-                time.sleep(3)
-                self.__re__()
+            self.get_user_points()
+            time.sleep(3)
+            self.__re__()
         elif menu == 0:
-            for name in self.player.name:
-                if os.path.isfile(f"{name}.txt"):
-                    os.remove(f"{name}.txt")
             exit(0)
 
         else:
             self.__re__()
 
+    def get_user_points(self):
+        for name in self.player.name:print(f"{name}, Points: {points[name]}")
 
     def winner(self,name):
         print(f"{name} win the game!")
         time.sleep(3)
         question = int(input("New Game 1.\nExit 0.\n"))
         if question == 1:
-            for name in self.player.name:
-                if os.path.isfile(f"{name}.txt"):
-                     os.remove(f"{name}.txt")
             main()
         elif question == 0:
             exit(0)
         else:
             exit(0)
 
+    def check_score(self):
+        for name in self.player.name:
+            if int(points.get(name)) >= self.max_points:
+                self.winner(name)
         
     def question(self):
         ask = int(input("How many players ? min player 1. max players 8.\nExit 0.\n"))
         return ask
-    
+
     def player_amount(self):
         players_num = self.question()
         player_names = []
@@ -85,40 +68,13 @@ class Game(object):
             g = Game()
             g.play()
     
-    def add_points(self,name):
-        with open(f"{name}.txt","a+") as file:
-            file.write("Point")
-            file.write("\n")
-    
-    def add_10_points(self,name):
-        with open(f"{name}.txt","a+") as file:
-            for point in range(0,10):
-                file.write("Point")
-                file.write("\n")
-
-    def calc_points(self,name):
-        point = "Point"
-        count = 0
-        try:
-            with open(f"{name}.txt","r") as file:
-                for line in file:
-                    if point in line:
-                        count += 1
-        except:
-            pass
-        return count
-
-
+ 
     def menu(self):
         subprocess.call("clear")
-        print("Next word 1.")
-        print("New game 2.")
-        print("Show score 3.")
-        print("Exit 0.")
-        choice = int(input("your choice: "))
+        choice = int(input("Next word 1.\nNew game 2.\nShow score 3.\nExit 0.\nyour choice: "))
         return choice
 
-
+    
     def play(self):
         word = __words__()
         win = False
@@ -137,19 +93,22 @@ class Game(object):
                         cind = rletters.index(char)
                         board[cind] = char
                         rletters[cind] = '$'
-                        self.add_points(self.player.name[name])
-                        print(f"{self.player.name[name]} got 1 point.")
-                        if self.calc_points(self.player.name[name]) >= self.max_points:
-                            self.winner(self.player.name[name])
+                        print(f"{self.player.name[name]} + 1 point.")
+                        point = int(points.get(self.player.name[name]))
+                        point = point + 1
+                        points.update( {self.player.name[name]:point} )
+                        print(f"{self.player.name[name]}, Points: {int(points.get(self.player.name[name]))}")
                         print(" ".join(board))
+                        self.check_score()
                         if "__" not in board:
                             subprocess.call("clear")
-                            self.add_10_points(self.player.name[name])
+                            point = int(points.get(self.player.name[name]))
+                            point = point + 10
+                            points.update( {self.player.name[name]:point} )
                             print(f"{self.player.name[name]}, win the round! The word is: ")
                             print(" ".join(board))
-                            print(self.calc_points(self.player.name[name]))
-                            if self.calc_points(self.player.name[name]) >= self.max_points:
-                                self.winner(self.player.name[name])
+                            print(int(points.get(self.player.name[name])))
+                            self.check_score()
                             time.sleep(3)
                             self.__re__()
                                 
@@ -160,7 +119,7 @@ class Game(object):
                         i = wrong + 1
                         print(("".join(board)))
                         print("\n".join(stage[name:i]))
-                        
+           
         print("You lose the round!\nthe word was: " + word)
         time.sleep(3)
         self.__re__()            
@@ -169,8 +128,8 @@ class Game(object):
 class Player:
     def __init__(self,name):
         self.name = name
-    
 
+    
 class Stages:
     def __init__(self):
         self.stage1()
@@ -187,6 +146,8 @@ class Stages:
             ]
         return stage
 
+points = {}
+
 def __words__():
     return(random.choice(open("words.txt").read().splitlines()))
 
@@ -196,4 +157,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
