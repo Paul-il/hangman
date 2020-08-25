@@ -2,7 +2,6 @@ import random
 import subprocess
 import time
 
-
 class Game(object):
     def __init__(self):
         self.max_points = 100
@@ -26,7 +25,6 @@ class Game(object):
             self.__re__()
         elif menu == 0:
             exit(0)
-
         else:
             self.__re__()
 
@@ -68,12 +66,10 @@ class Game(object):
             g = Game()
             g.play()
     
- 
     def menu(self):
         subprocess.call("clear")
         choice = int(input("Next word 1.\nNew game 2.\nShow score 3.\nExit 0.\nyour choice: "))
         return choice
-
     
     def play(self):
         word = __words__()
@@ -111,7 +107,6 @@ class Game(object):
                             self.check_score()
                             time.sleep(3)
                             self.__re__()
-                                
                     else:
                         restart = False
                         print("Wrong letter!\n")
@@ -119,17 +114,14 @@ class Game(object):
                         i = wrong + 1
                         print(("".join(board)))
                         print("\n".join(stage[name:i]))
-           
         print("You lose the round!\nthe word was: " + word)
         time.sleep(3)
         self.__re__()            
                 
-
 class Player:
     def __init__(self,name):
         self.name = name
 
-    
 class Stages:
     def __init__(self):
         self.stage1()
