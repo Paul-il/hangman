@@ -21,7 +21,7 @@ class Game(object):
         elif menu == 2:
             main()
         elif menu == 3:
-            self.get_user_points()
+            self.get_user_score()
             time.sleep(3)
             self.__re__()
         elif menu == 0:
@@ -30,7 +30,7 @@ class Game(object):
         else:
             self.__re__()
 
-    def get_user_points(self):
+    def get_user_score(self):
         for name in self.player.name:print(f"{name}, Points: {points[name]}")
 
     def winner(self,name):
