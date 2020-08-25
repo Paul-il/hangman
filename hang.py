@@ -5,7 +5,7 @@ import time
 
 class Game(object):
     def __init__(self):
-        self.max_points = 5
+        self.max_points = 100
         self.player = Player(self.player_amount())
         self.stage = Stages()
         self.__add_user_to_dict__()
